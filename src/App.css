@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* New */
+.todo-text {
+  text-align: justify;
+}
+
+.action-btn {
+  font-size: 12px;
+}
+
+.title-input:focus {
+  outline: none;
+}
+
+.todo-textarea {
+  outline: none;
+  height: 100px;
+}
