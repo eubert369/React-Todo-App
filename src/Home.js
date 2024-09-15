@@ -8,16 +8,19 @@ import { collection, addDoc, setDoc, doc, getDocs, getDoc } from "firebase/fires
 
 function Home() {
     var [todo, setDbTodo] = useState([]);
-    var [getTodo, setTodo] = useState([]);    
+    var [getTodo, setTodo] = useState([]);
     var [getDone, setDone] = useState([]);
     var [getBtnState, setBtnState] = useState(1);
     var [search, setSearch] = useState('');
-    
+    var [loading, setLoading] = useState('');
+
     const fetchData = async () => {
+        setLoading('Loading ...')
         await getDocs(collection(db, "todos"))
             .then((query) => {
                 const newData = query.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-                setDbTodo(newData);                
+                setDbTodo(newData);
+                setLoading("No Todo's Available");
             })
     }
 
@@ -44,9 +47,14 @@ function Home() {
         // }
     }
 
+
+
+
+
     var handleSearchClick = async () => {
+        // ZOMBIE DISREGARD
         // Firestore Add Data
-        
+
 
         // try {
         //     const docRef = await addDoc(collection(db, 'todos'), {
@@ -79,6 +87,7 @@ function Home() {
         //     //         console.log("No such document!");
         //     //     }
         // });
+        // END ZOMBIE
     }
 
     if (getBtnState == 1) {
@@ -88,7 +97,7 @@ function Home() {
 
                 <div className="row px-5 mt-5">
                     <Search searchType={searchEvent} handleClick={handleSearchClick} />
-                    <Todo items={getTodo} setItems={setTodo} setFinished={setDone} getFinished={getDone} searched={search} getTodo={todo} fetch={fetchData} />
+                    <Todo items={getTodo} setItems={setTodo} setFinished={setDone} getFinished={getDone} searched={search} getTodo={todo} fetch={fetchData} textLoad={loading} />
                     <div className="fixed-bottom d-flex justify-content-end">
                         <button className="btn btn-success mb-4 me-2 rounded-circle fs-3 fw-bold py-2 px-4" onClick={doneBtnState}>✔</button>
                         <button className="btn btn-primary mb-4 me-3 rounded-circle fs-3 fw-bold py-2 px-4" onClick={todoBtnState}>+</button>

@@ -5,12 +5,15 @@ import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 
 function DoneTodo(props) {
     var [getDone, setDone] = useState([]);
+    var [loading, setLoading] = useState('');
 
     var fetchDone = async () => {
+        setLoading('Loading ...');
         await getDocs(collection(db, "finished"))
             .then((query) => {
                 const newData = query.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
                 setDone(newData);
+                setLoading("No Finished Task's");
             })
     };
 
@@ -19,11 +22,16 @@ function DoneTodo(props) {
     }, []);
 
     var handleDelete = async (id) => {
-        try {
-            await deleteDoc(doc(db, 'finished', id));
-            fetchDone();
-        } catch (error) {
-            console.error(error);
+
+        var delAction = window.confirm('Are you sure you want to delete?');
+
+        if (delAction === true) {
+            try {
+                await deleteDoc(doc(db, 'finished', id));
+                fetchDone();
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 
@@ -78,7 +86,7 @@ function DoneTodo(props) {
     } else {
         return (
             <>
-                <h3 className="mt-5 text-danger">No Finished Task's</h3>
+                <h3 className="mt-5 text-danger">{loading}</h3>
             </>
         );
     }

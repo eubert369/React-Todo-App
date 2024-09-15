@@ -20,7 +20,7 @@ function Todo(props) {
 
             await deleteDoc(doc(db, 'todos', item.id));
             props.fetch();
-            
+
         } catch (error) {
             console.error(error);
         }
@@ -28,11 +28,22 @@ function Todo(props) {
     }
 
     const handleDelete = async (id) => {
-        try {
-            await deleteDoc(doc(db, 'todos', id));
-            props.fetch();
-        } catch (error) {
-            console.error(error);
+        // try {
+        //     await deleteDoc(doc(db, 'todos', id));
+        //     props.fetch();
+        // } catch (error) {
+        //     console.error(error);
+        // }
+
+        var delAction = window.confirm('Are you sure you want to delete?');
+
+        if (delAction === true) {
+            try {
+                await deleteDoc(doc(db, 'todos', id));
+                props.fetch();
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 
@@ -47,7 +58,7 @@ function Todo(props) {
                                     <p className="my-0 text-start text-info fw-bold">Status: (Pending)</p>
                                     <p className="my-0 text-start fw-bold">{item.date_created}</p>
                                     <h3 className="text-start fw-bold">{item.title}</h3>
-                                    <p className="mx-3 fw-bold mb-0 todo-text">{item.text}</p>
+                                    <p className="mx-3 fw-bold mb-0 todo-text">{item.text.replace('\n', '<br/>')}</p>
                                     <div className="position-absolute top-0 end-0 d-flex mx-3 mt-2">
                                         <button className="btn btn-danger rounded-5 me-1 fw-bold action-btn" onClick={() => handleDelete(item.id)}><img src={del_icon} alt='delete icon' /></button>
                                         <button className="btn btn-primary rounded-5 ms-1 fw-bold action-btn" onClick={() => {
@@ -95,7 +106,8 @@ function Todo(props) {
     } else {
         return (
             <>
-                <h3 className="text-warning mt-5" >No Todo's Available</h3>
+                {/* <h3 className="text-warning mt-5" >No Todo's Available</h3> */}
+                <h3 className="text-warning mt-5" >{props.textLoad}</h3>
             </>
         );
     }
