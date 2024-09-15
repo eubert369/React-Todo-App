@@ -1,10 +1,10 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Routes, Router, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import Todo from './Todos';
-import CreateTodo from './Create';
-import DoneTodo from './Done';
+// import Todo from './Todos';
+// import CreateTodo from './Create';
+// import DoneTodo from './Done';
 
 function App() {
   return (
