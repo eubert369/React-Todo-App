@@ -20,7 +20,7 @@ function CreateTodo(props) {
     }
 
     var saveButton = async (e) => {
-        if (getTitle.length == 0 || getText.length == 0) {
+        if (getTitle.length === 0 || getText.length === 0) {
             alert('Nothing to save!');
         } else {
             // props.setItems([...props.getItems, {
